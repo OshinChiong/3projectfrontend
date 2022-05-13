@@ -1,21 +1,23 @@
-import React from 'react';
-import { post } from '../authService/authService';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React from "react";
+import { post } from "../authService/authService";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
     // const [errorMessage, setErrorMessage] = React.useState("");
-    // const [email, setEmail] = React.useState("");
+    const [email, setEmail] = React.useState("");
     const navigate = useNavigate();
 
     function checkFields(e) {
         e.preventDefault();
         console.log("signup", username, password, confirmPassword)
         post("/users/signup", {
+            email: email,
             username: username,
             password: password,
+            confirmPassword: confirmPassword
           })
             .then((results) => {
               console.log("Results", results.data.token);
@@ -29,12 +31,12 @@ const Signup = () => {
 
 return (
     <form onSubmit={checkFields} >
-      {/* <label> Email </label>
+      <label> Email </label>
     <input 
     onChange={(e) => setEmail (e.target.value)}
     name="Email"
     value={email}
-    /> */}
+    />
     <label> Username </label>
     <input 
     onChange={(e) => setUsername(e.target.value)}
@@ -54,7 +56,7 @@ return (
     value={confirmPassword}
     />
    
-     <button> Create </button>
+     <button> Create Account </button>
      <p> {} </p>
     </form>
 );

@@ -1,46 +1,56 @@
-// import React from "react";
+import React from "react";
+import { post } from "../authService/authService";
+import { useNavigate } from "react-router-dom";
 
+const Login = () => {
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+ 
 
+  const navigate = useNavigate();
 
-// const Login = () => {
-//   const [username, setUsername] = React.useState("");
-//   const [password, setPassword] = React.useState("");
-//   const [confirmPassword, setConfirmPassword] = React.useState("");
-//   const [errorMessage, setErrorMessage] = React.useState("");
+  function checkFields(e) {
+    e.preventDefault();
+    console.log("logIn", username, password)
+    post("/users/login", {
+      
+        username: username,
+        password: password
+    
+      })
+        .then((results) => {
+          console.log("Results", results.data.token);
+          localStorage.setItem('authToken', results.data.token);
+          navigate("/")
+        })
+        .catch((err) => {
+          console.log("Something went wrong", err.message);
+        });
+}
 
-//   const navigate = useNavigate();
+  return (
+    <>
+      <h2 style={{ textAlign: "center" }}> Log In </h2>
 
-//   function register(e) {
-//     e.preventDefault();
-//     console.log("signup", username, password)
+      <form onSubmit={checkFields} style={{ textAlign: "center" }}>
+      <label> Username </label>
+    <input 
+    onChange={(e) => setUsername(e.target.value)}
+    name="username"
+    value={username}
+    />
+      <label> Password </label>
+    <input 
+    onChange={(e) => setPassword (e.target.value)}
+    name="username"
+    value={password}
+    />
   
-//   }
+        <button> Log In </button>
+        <p>{}</p>
+      </form>
+    </>
+  );
+};
 
-//   return (
-//     <>
-//       <h2 style={{ textAlign: "center" }}>Signup</h2>
-
-//       <form onSubmit={register} style={{ textAlign: "center" }}>
-//         <TextInput
-//           action={(e) => setUsername(e.target.value)}
-//           name="username"
-//           value={username}
-//         />
-//         <TextInput
-//           action={(e) => setPassword(e.target.value)}
-//           value={password}
-//           name="password"
-//         />
-//         <TextInput
-//           action={(e) => setConfirmPassword(e.target.value)}
-//           value={confirmPassword}
-//           name="confirmPassword"
-//         />
-//         <button>Create</button>
-//         <p>{errorMessage}</p>
-//       </form>
-//     </>
-//   );
-// };
-
-// export default Login;
+export default Login;
