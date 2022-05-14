@@ -3,8 +3,6 @@ import axios from "axios";
 import { Routes, Route, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-
-
 const Join = () => {
     const [username, setUsername] = React.useState("");
     const [user, setUser] = React.useState("");
@@ -23,6 +21,7 @@ const Join = () => {
 
 return (
     <form onSubmit={Join} >
+    <p> Want to play join a Team </p>
     <label> Username </label>
     <input 
     onChange={(e) => setUsername(e.target.value)}
@@ -43,7 +42,7 @@ return (
     />
    
      <button> Join to team </button>
-     <p> {} </p>
+    
     </form>
 );
 };
