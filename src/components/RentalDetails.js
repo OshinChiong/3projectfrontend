@@ -42,8 +42,6 @@ const RentalDetails = () => {
   const params  = useParams();
   const {id} = useParams()
 
-
-  console.log("PARAMS", params)
   React.useEffect(() => {
      reserve();
   }, []);
@@ -103,10 +101,14 @@ const reserve = () => {
   const calendarComponentRef = React.createRef();
   const handleEventClick = (event) => {
    
-    console.log("Handle event click");
+    console.log("event.event", event.event);
+    console.log("event.event.extendedProps", event.event.extendedProps);
+    //This is the rental id
+    console.log("vent.event.extendedProps._id", event.event.extendedProps._id);
     setState({
        ...state,
       showCard: true,
+      id:event.event.extendedProps._id
     });
     handleReserve(event.event.extendedProps._id);
   };
@@ -115,7 +117,8 @@ const reserve = () => {
 
 
   const handleReserve = (rentalId) => {
-    console.log(rentalId);
+    console.log("RENTAL ID", rentalId);
+    console.log("PARAMS", params);
     get(`/field/${params.id}`)
       .then((res) => {
         console.log("You have Reserve this field", res.data);
@@ -139,8 +142,8 @@ const reserve = () => {
       .catch((err) => console.log(err));
   };
 
-  const handleDeleteClick = () => {
-    console.log("Handle Delete click");
+  const handleDeleteClick = (id) => {
+    console.log("Handle Delete click", id);
     setState({
       ...state,
       showCard: false,
@@ -220,6 +223,7 @@ const reserve = () => {
   };
 
   const handleDateClick = () => {
+    console.log("handle Date Click!!!")
     setState({
       ...state,
       
@@ -278,7 +282,7 @@ const reserve = () => {
       });
     }
   };
-  console.log("card and modal", state);
+  // console.log("card and modal", state);
   return (
     <div className="demo-app">
  

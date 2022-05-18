@@ -18,6 +18,8 @@ export default function RentalCard(props) {
     });
   },[])
 
+  console.log("PROPSSSSSSS", props)
+
   
   function userDropdowns(users, players) {
     const mappedUsers = users?.map((user) => {
@@ -124,7 +126,7 @@ export default function RentalCard(props) {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            onClick={props.delete}
+            onClick={()=>props.delete(props.id)}
             variant="danger"
             className="deleteEvent"
           >
