@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Routes, Route, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { get, post } from "../authService/authService";
 // import { Modal, Button } from "react-bootstrap";
 
 const Join = (props) => {
@@ -13,8 +14,7 @@ const Join = (props) => {
 
 
     function Join() {
-        axios
-        .get("http://localhost:5001")
+        get("http://localhost:5001")
         .then((results) => (results.data))
         .catch((err) => console.log(err.message));
     };
@@ -66,7 +66,7 @@ const Join = (props) => {
                 </div>
     
                 <div className="form-group">
-                  <label htmlFor="startDate"> Days available </label>
+                  <label htmlFor="date"> Days available </label>
                   <input
                     type="date"
                     className="form-control"

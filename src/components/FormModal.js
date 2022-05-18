@@ -3,9 +3,9 @@ import { Modal, Button } from "react-bootstrap";
 
 export default function FormModal(props) {
 
-  function userDropdowns(users, players) {
+  function userDropdowns(users, people) {
     const mappedUsers = users?.map((user) => {
-      const selected = players.find((players) => user === user._id)
+      const selected = people.find((people) => user === user._id)
         ? true
         : false;
       return (
@@ -33,53 +33,40 @@ export default function FormModal(props) {
               <input
                 type="text"
                 className="form-control"
-                id="title"
+                id="user"
                 placeholder="Username"
-                value={props.title}
-                name="title"
+                value={props.user}
+                name="user"
                 onChange={props.handleInputChange}
               />
-              <p className="error">{props.errorTitle}</p>
+              <p className="error">{props.errorUser}</p>
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label> Field Size </label>
               <input
                 type="text"
                 className="form-control"
                 id="field"
-                placeholder="Field Size "
-                value={props.field}
-                name="firstName"
+                placeholder="Field Size"
+                value={props.fieldSize}
+                name="field"
                 onChange={props.handleInputChange}
               />
-              <p className="error">{props.errorField}</p>
-            </div>
-            {/* <div className="form-group">
-              <label> Size </label>
-              <input
-                type="text"
-                className="form-control"
-                id="Size"
-                placeholder="size"
-                value={props.size}
-                name="Size"
-                onChange={props.handleInputChange}
-              />
-              <p className="error">{props.errorSize}</p>
+              <p className="error">{props.errorFieldSize}</p>
             </div> */}
 
             <div className="form-group">
-              <label htmlFor="startDate"> Date</label>
+              <label htmlFor="start"> Date</label>
               <input
                 type="date"
                 className="form-control"
                 id="start"
-                placeholder="YYYY-MM-DD"
-                value={props.date}
+                placeholder="MM-DD-YYYY"
+                value={props.start}
                 name="start"
                 onChange={props.handleInputChange}
               />
-              <p className="error">{props.errorTime}</p>
+              <p className="error">{props.errorDate}</p>
             </div>
            
             <div className="form-group">
@@ -88,7 +75,7 @@ export default function FormModal(props) {
                 type="time"
                 className="form-control"
                 id="timepicker"
-                placeholder="HH-mm-ss a"
+                placeholder="HH-mm-ss"
                 value={props.time}
                 name="time"
                 onChange={props.handleInputChange}
@@ -111,7 +98,7 @@ export default function FormModal(props) {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={props.close} variant="secondary">
+          <Button onClick={props.close} variant="contained" color="" >
             Close
           </Button>
           <Button onClick={props.save} variant="primary" className="newEvent">

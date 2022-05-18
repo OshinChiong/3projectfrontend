@@ -58,11 +58,12 @@ navigate("/")
         <Route path="/join" element={<Join />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/fullcalendar" element={<FullCalendar />} />
-        
-        <Route path="/reservationDetails/:id" element={<RentalDetails />} />
-        <Route path="/deleteUser" element={<Delete />} />
-        <Route path="/details/:id" element={<Reservations />} />
-       
+
+        <Route path="/reserve/:id" element={<RentalDetails />} />
+        <Route path="/deleteuser" element={<Delete />} />
+        <Route path="/allRentals" element={<RentalDetails />} />
+        <Route path="/allRentals/:id" element={<RentalDetails />} />
+        <Route path="/view-calendar" element={<RentalDetails />} />
       </Routes>
     
       <Footer />

@@ -2,8 +2,23 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import Clock from "./Clock";
 import moment from "moment";
+import { get } from "../authService/authService";
 
 export default function RentalCard(props) {
+
+  React.useEffect(()=>{
+    get('/rental/allRentals/6283c5131717721c9cb3ab45')
+    // get(`/rental/allRentals/6283c5131717721c9cb3ab45`)
+    .then((results) => {
+        console.log("this is results.data", results.data.rentalData)
+      // setAllRental(results.data);
+    })
+    .catch((err) => {
+      console.error(err.message);
+    });
+  },[])
+
+  
   function userDropdowns(users, players) {
     const mappedUsers = users?.map((user) => {
       const selected = players.find((player) => player === user._id)
@@ -15,6 +30,7 @@ export default function RentalCard(props) {
         </option>
       );
     });
+    
     return mappedUsers;
   }
   
@@ -28,7 +44,7 @@ export default function RentalCard(props) {
         </Modal.Header>
         <Modal.Body>
           <form autoComplete="off">
-            <div className="form-group">
+            {/* <div className="form-group">
               <label htmlFor="title"> Reservation number </label>
               <input
                 type="text"
@@ -40,9 +56,9 @@ export default function RentalCard(props) {
                 onChange={props.handleInputChange}
               />
               <p className="error">{props.errorTitle}</p>
-            </div>
+            </div> */}
 
-            <div className="form-group">
+            {/* <div className="form-group">
               <label htmlFor="exampleFormControlSelect2"> Players </label>
               <select
                 multiple
@@ -52,38 +68,34 @@ export default function RentalCard(props) {
               >
                 {userDropdowns(props.users, props.players)}
               </select>
-            </div>
+            </div> */}
         
+           
             <div className="form-group">
-              <label htmlFor="startDate"> Date </label>
+              <label htmlFor="date"> Date</label>
               <input
                 type="date"
                 className="form-control"
-                placeholder="YYYY-MM-DD"
-                min="2022-01-01"
-                max="2100-01-01"
-                id="start"
-                value={props.start}
-                name="start"
+                id="date"
+                placeholder="MM-DD-YYYY"
+                value={props.date}
+                name="date"
                 onChange={props.handleInputChange}
               />
-              
-              <p className="error">{props.errorStart}</p>
+              <p className="error">{props.errorDate}</p>
             </div>
             <div className="form-group">
-              <label htmlFor="endDate"> Time </label>
+              <label htmlFor="time"> Time </label>
               <input
                 type="time"
                 className="form-control"
-                id="time"
-                placeholder="YYYY-MM-DD"
-                min="2022-01-01"
-                max="2100-01-01"
+                id="timepicker"
+                placeholder="HH-mm-ss"
                 value={props.time}
-                name="end"
+                name="time"
                 onChange={props.handleInputChange}
-              /> 
-               <p className="error">{props.errorTime}</p>
+              />
+              <p className="error">{props.errorTime}</p>
             </div>
             {/* <div className="form-group">
               <label htmlFor="description"> Comment </label>

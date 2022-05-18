@@ -4,64 +4,38 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-
-import RentalForm from "./FormModal";
 import Clock from "./Clock";
+
+import FormModal from "./FormModal";
 import RentalCard from "./RentalCard";
 // import "./main.scss";
 import moment from "moment-timezone";
-// import NavBar from "./NavBar";
 import { get, post } from "../authService/authService";
 import { useNavigate } from "react-router-dom";
 import { useParams, Link  } from "react-router-dom";
 
 
-
-const players = [
-  "1 Player",
-  "2 Players",
-  "3 Players",
-  "4 Players",
-  "5 Players",
-  "6 Players",
-  "7 Players",
-  "8 Players",
-  "9 Players",
-  "10 Players",
-  "11 Players",
-  "12 Players",
-  "13 Players",
-  "14 Players",
-  "15 Players",
-  "16 Players",
-  "17 Players",
-  "18 Players",
-  "19 Players",
-  "20 Players",
-  "21 Players",
-  "22 Players",
-]
-
-
 const RentalDetails = () => {
   const [field, setField]  = React.useState({});
-  const [time, setTime]  = React.useState([]);
-  const [players, setPlayers]  = React.useState([]);
+  const [time, setTime]  = React.useState("");
+  const [date, setDate]  = React.useState("");
+  const [people, setPeople]  = React.useState([]);
+  //const [rental, setRental]  = React.useState([]);
   const [state, setState] = React.useState({
-    calendarWeekends: true,
+    calendar: true,
     eventSources: [],
     id: "",
-    title: "",
-    start: new Date(),
+    // user: "",
+    // date: new Date(),
+    date: "",
     time: "",
-    comment: "",
+    field: "",
+    size: "",
+    // comment: "",
     showModal: false,
-    errorTitle: "",
-    errorStart: "",
-    errorComment: "",
     showCard: false,
     users: [],
-    players: [],
+    people: [],
    });
   
   const navigate = useNavigate();
@@ -71,65 +45,95 @@ const RentalDetails = () => {
 
   console.log("PARAMS", params)
   React.useEffect(() => {
-    reserve();
+     reserve();
   }, []);
-
-  const reserve = () => {
-    get(`https://soccerloco.herokuapp.com/field/${params.fieldId}`)
-      .then((results) => {
-        console.log(results.data);
-        setField({
-          ...state,
-          showCard: false,
-          eventSources: results.data.map((e) => {
-            let start = moment(e.start).tz("UTC").format("YYYY-MM-DD");
-            let end = moment(e.end)
-              .tz("UTC")
-              .add(1, "days")
-              .format("YYYY-MM-DD");
-            return {
-              ...e,
-              start: start,
-              end: end,
-            };
-          }),
-        });
-      })
-      .catch((err) => {
-        console.log(err.message);
+// display  on calendar
+const reserve = () => {
+  get("/rental/view-rental")
+    .then((resp) => {
+      console.log(resp.data);
+      setState({
+        ...state,
+        showCard: false,
+        eventSources: resp.data.map((e) => {
+          let start = moment(e.start).tz("UTC").format("YYYY-MM-DD");
+          let end = moment(e.end)
+            .tz("UTC")
+            .add(1, "days")
+            .format("YYYY-MM-DD");
+          return {
+            ...e,
+            start: start,
+            end: end,
+          };
+        }),
       });
-  };
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+  // const reserve = () => {
+  //   get(`https://soccerloco.herokuapp.com/field/${params.fieldId}`)
+  //     .then((results) => {
+  //       console.log(results.data);
+  //       setField({
+  //         ...state,
+  //         showCard: false,
+  //         eventSources: results.data.map((e) => {
+  //           let start = moment(e.start).tz("UTC").format("YYYY-MM-DD");
+  //           let end = moment(e.end)
+  //             .tz("UTC")
+  //             .add(1, "days")
+  //             .format("YYYY-MM-DD");
+  //           return {
+  //             ...e,
+  //             start: start,
+  //             end: end,
+  //           };
+  //         }),
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.message);
+  //     });
+  // };
   
   const calendarComponentRef = React.createRef();
   const handleEventClick = (event) => {
    
     console.log("Handle event click");
-    setField({
-      // ...state,
+    setState({
+       ...state,
       showCard: true,
     });
     handleReserve(event.event.extendedProps._id);
   };
 
+
+
+
   const handleReserve = (rentalId) => {
     console.log(rentalId);
-    axios
-    .get(`https://soccerloco.herokuapp.com/field/${params.fieldId}`)
+    get(`/field/${params.id}`)
       .then((res) => {
         console.log("You have Reserve this field", res.data);
         const dateStart = res.data.start;
         const start = moment(dateStart).tz("UTC").format("YYYY-MM-DD");
-        // const dateEnd = res.data.end;
-        // const end = moment(dateEnd).tz("UTC").format("YYYY-MM-DD");
+        const dateEnd = res.data.end;
+        const end = moment(dateEnd).tz("UTC").format("YYYY-MM-DD");
         setState({
           ...state,
           showCard: true,
           rentalId: res.data._id,
-          title: res.data.title,
-          start: start,
-          times: "",
-          comment: res.data.comment,
-          players: res.data.players,
+          user: res.data.user,
+          date: date,
+          time: "",
+          field: "",
+          size: "",
+          // comment: res.data.comment,
+          people: res.data.people,
         });
       })
       .catch((err) => console.log(err));
@@ -146,7 +150,7 @@ const RentalDetails = () => {
 
   const handleUpdateClick = () => {
     console.log("Handle update click");
-    if (state.title && state.start && state.end ) {
+    if (state.user && state.date && state.time ) {
       setState({
         ...state,
         showCard: false,
@@ -154,16 +158,16 @@ const RentalDetails = () => {
       handleUpdateRental(state.id);
       setState({
         ...state,
-        errorTitle: "",
-        errorStart: "",
+        errorUser: "",
+        errorDate: "",
         errorTime: "",
-        errorComment: "",
+        // errorComment: "",
       });
     } else {
       setState({
         ...state,
-        errorTitle: "*Please enter your username",
-        errorStart: "*Please enter date",
+        errorUser: "*Please enter your user",
+        errorDate: "*Please enter date",
         errorTime: "*Please enter time",
         // errorComments: "*Please enter comments",
       });
@@ -179,12 +183,13 @@ const RentalDetails = () => {
       .catch((err) => console.log(err));
   };
 
-  const handleUpdateRental = (id) => {
-    post(`/rental/${id}/`, state)
+  const handleUpdateRental = (state) => {
+    post(`/rental/${id}/edit`, state)
       // .update(id, state)
       .then((foundRental) => {
         localStorage.setItem("rental", foundRental.data);
         reserve();
+        console.log("!!!!!!", state)
       })
       .catch((err) => console.log(err));
   };
@@ -207,85 +212,83 @@ const RentalDetails = () => {
       ...state,
       showModal: false,
       showCard: false,
-      errorTitle: "",
-      errorStart: "",
-      errorLocation: "",
+      errorUser: "",
+      errorDate: "",
       errorTime: "",
-      errorComment: "",
+      // errorComment: "",
     });
   };
 
   const handleDateClick = () => {
     setState({
       ...state,
-      startDate: new Date(),
+      
       showModal: true,
-      title: "",
-      location: "",
-      start: new Date().getUTCHours(),
-      end: new Date().getUTCHours(),
-      commet: "",
+      user: "",
+      date: new Date().getUTCHours(),
+      time: new Date().getUTCHours(),
+      // commet: "",
     });
   };
 
-  const handleGuestsChange = (event) => {
+  const handleUserChange = (event) => {
     let asArr = Array.prototype.slice.call(event.target.options);
-    let playersIds = asArr
+    let peopleIds = asArr
       .filter((option) => option.selected)
       .map((option) => option.value);
 
     setState({
       ...state,
-      players: playersIds,
+      people: peopleIds,
     });
   };
 
   const handleSaveRental = () => {
-    if (state.title && state.start && state.time) {
-      post(`/rental/create/${params.id}`, state)
+    if (state.user && state.date && state.time) {
+      post(`/rental/create/${id}`, state)
+      // console.log("!!!!", id)
         .then(() => {
           setState({
             ...state,
             showModal: false,
           });
-          navigate(`/details/${id}`);
+          console.log(state)
+          // navigate(`/reserve/${id}`);
+          navigate(`/allRentals/${id}`);
         })
         .catch((err) => console.log(err));
       setState({
         ...state,
-        title: "",
-        start: new Date().getUTCHours(),
-        // end: new Date().getUTCHours(),
-        commments: "",
-        errorTitle: "",
-        errorTime: "",
-        errorStart: "",
-        errorComments: "",
-        players: [],
+        field: "",
+        time: "",
+        date: new Date().getUTCHours(),
+   
+        // errorComments: "",
+        people: [],
       });
     } else {
       setState({
         ...state,
-        errorTitle: "*Please enter your username",
-        errorFirstName: "*Please enter your First Name ",
-        errorLastName: "*Please enter your Last Name",
-        errorStart: "*Please enter the start date",
-        errorTime: "*Please enter time",
+        errorUser: "*Please enter your user",
+        // errorFirstName: "*Please enter your First Name ",
+        // errorLastName: "*Please enter your Last Name",
+        // errorDate: "*Please enter the date",
+        // errorTime: "*Please enter time",
         // errorcomment: "*Please enter t",
       });
     }
   };
-  console.log("card and modal", state.showCard, state.showModal);
+  console.log("card and modal", state);
   return (
     <div className="demo-app">
-      {/* <NavBar /> */}
-      <RentalForm
+ 
+      <FormModal
         show={state.showModal}
         {...state}
         close={handleCloseClick}
         save={() => handleSaveRental()}
         handleInputChange={handleInputChange}
-        handleGuestsChange={handleGuestsChange}
+        handleUserChange={handleUserChange}
       />
       <RentalCard
         show={state.showCard}
@@ -294,7 +297,7 @@ const RentalDetails = () => {
         delete={handleDeleteClick}
         save={handleUpdateClick}
         handleInputChange={handleInputChange}
-        handleGuestsChange={handleGuestsChange}
+        handleUserChange={handleUserChange}
       />
       {/* <div className="demo-app-top mb-4">
         &nbsp;
@@ -315,6 +318,19 @@ const RentalDetails = () => {
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           ref={calendarComponentRef}
           weekends={state.calendarWeekends}
+//           events={ [
+//     {
+//       title: 'Event1',
+//       start: '2022/05/01'
+//     },
+//     {
+//       title: 'Event2',
+//       start: '2022/05/06'
+//     }
+ 
+//   ]
+
+// }
           events={state.eventSources}
           dateClick={handleDateClick}
           eventClick={handleEventClick}
@@ -328,3 +344,31 @@ const RentalDetails = () => {
 
 
 export default RentalDetails;
+
+
+
+
+// const players = [
+//   "1 Player",
+//   "2 Players",
+//   "3 Players",
+//   "4 Players",
+//   "5 Players",
+//   "6 Players",
+//   "7 Players",
+//   "8 Players",
+//   "9 Players",
+//   "10 Players",
+//   "11 Players",
+//   "12 Players",
+//   "13 Players",
+//   "14 Players",
+//   "15 Players",
+//   "16 Players",
+//   "17 Players",
+//   "18 Players",
+//   "19 Players",
+//   "20 Players",
+//   "21 Players",
+//   "22 Players",
+// ]

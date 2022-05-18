@@ -12,7 +12,7 @@ import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
 const Rental = () => {
   const [fields, setFields] = React.useState([]);
   const [time, setTime] = React.useState(null);
-  const [players, setPlayers] = React.useState("");
+  const [people, setPeople] = React.useState("");
   const [name, setName] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -21,20 +21,19 @@ const Rental = () => {
   const params  = useParams();
 
     const [state, setState] = React.useState({
-      calendarWeekends: true,
+      calendar: true,
       eventSources: [],
-      id: "",
-      title: "",
-      start: new Date(),
+      user: "",
+      date: new Date(),
       time: "",
-      comment: "",
+      // comment: "",
       showModal: false,
-      errorTitle: "",
-      errorStart: "",
+      errorUser: "",
+      errorDate: "",
       errorComment: "",
       showCard: false,
-      users: [],
-      players: [],
+      // users: [],
+      people: [],
      });
 
 
@@ -54,7 +53,7 @@ const Rental = () => {
         <div>
      {fields.map (function(field) {
        return(
-        <Link to={`/reservationDetails/${field._id}`}>    
+        <Link to={`/reserve/${field._id}`}>    
         <img src='/images1.jpg' alt='fieldImage'/> 
         <p> {field.name} </p>
         <p> ${field.price} </p>
