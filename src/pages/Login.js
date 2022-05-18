@@ -6,7 +6,6 @@ const Login = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
  
-
   const navigate = useNavigate();
 
   function checkFields(e) {
@@ -21,7 +20,7 @@ const Login = () => {
         .then((results) => {
           console.log("Results", results.data.token);
           localStorage.setItem('authToken', results.data.token);
-          navigate("/")
+          navigate("/reservation")
         })
         .catch((err) => {
           console.log("Something went wrong", err.message);
@@ -45,7 +44,6 @@ const Login = () => {
     name="username"
     value={password}
     />
-  
         <button> Log In </button>
         <p>{}</p>
       </form>

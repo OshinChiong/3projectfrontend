@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -8,25 +8,47 @@ import NotFound from "./pages/NotFound";
 import FullCalendar from "./components/FullCalendar";
 import Rental from "./components/Rental";
 import RentalDetails from "./components/RentalDetails";
+import Clock from "./components/Clock";
 import Footer from "./pages/Footer";
 import Join from "./components/Join";
-import Calendar from "./components/Calendar";
+import Reservations from "./components/Reservations";
+import Delete from "./pages/Delete";
+
 
 
 function App() {
+
+const navigate = useNavigate()
+
+let token = localStorage.getItem("authToken")
+ console.log("TOKEN", token )
+
+
+function logout() {
+localStorage.clear()
+navigate("/")
+ }
+
   return (
     <div>
       <header>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/signup">Sign up</Link>
-          <Link to="/login">Log in</Link>
-          <Link to="/reservation"> Reserve a field   </Link>
-          <Link to="/join"> Join a team </Link>
-          <Link to="/fullCalendar"> Full Calendar </Link>
-          <Link to="/Calendar">  Calendar </Link>
-        </nav>
+        {token ? (
+          <nav>
+            <Link to="/">Home</Link>
+            <button onClick={logout}>log out</button>
+          </nav>
+        ) : (
+          <nav>
+            <Link to="/">Home</Link>
+            <Link to="/signup">Sign up</Link>
+            <Link to="/login">Log in</Link>
+            <Link to="/reservation"> Reserve a field   </Link>
+            <Link to="/join"> Join a team </Link>
+            <Link to="/details"> Details </Link>
+          </nav>
+        )}
       </header>
+
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -36,9 +58,13 @@ function App() {
         <Route path="/join" element={<Join />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/fullcalendar" element={<FullCalendar />} />
-        <Route path="/reservationDetails" element={<RentalDetails />} />
-        <Route path="/calendar" element={<Calendar />} />
+        
+        <Route path="/reservationDetails/:id" element={<RentalDetails />} />
+        <Route path="/deleteUser" element={<Delete />} />
+        <Route path="/details/:id" element={<Reservations />} />
+       
       </Routes>
+    
       <Footer />
     </div>
   );

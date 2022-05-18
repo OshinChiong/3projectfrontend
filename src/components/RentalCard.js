@@ -3,10 +3,10 @@ import { Modal, Button } from "react-bootstrap";
 import Clock from "./Clock";
 import moment from "moment";
 
-export default function TripCard(props) {
-  function userDropdowns(users, guests) {
+export default function RentalCard(props) {
+  function userDropdowns(users, players) {
     const mappedUsers = users?.map((user) => {
-      const selected = guests.find((guest) => guest === user._id)
+      const selected = players.find((player) => player === user._id)
         ? true
         : false;
       return (
@@ -15,27 +15,26 @@ export default function TripCard(props) {
         </option>
       );
     });
-
     return mappedUsers;
   }
-
+  
   return (
-    <Modal show={props.show} id="trip">
+    <Modal show={props.show} id="reservation">
       <Modal.Dialog>
         <Modal.Header closeButton onClick={props.close}>
           <Modal.Title>
-            <i className="far fa-edit"></i> Edit Your Trip
+            <i className="far fa-edit"></i> Edit Your Reservation
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form autoComplete="off">
             <div className="form-group">
-              <label htmlFor="title">Trip Name</label>
+              <label htmlFor="title"> Reservation number </label>
               <input
                 type="text"
                 className="form-control"
                 id="title"
-                placeholder="Trip Name"
+                placeholder="Reservation"
                 value={props.title}
                 name="title"
                 onChange={props.handleInputChange}
@@ -44,32 +43,19 @@ export default function TripCard(props) {
             </div>
 
             <div className="form-group">
-              <label htmlFor="exampleFormControlSelect2">Guests</label>
+              <label htmlFor="exampleFormControlSelect2"> Players </label>
               <select
                 multiple
                 className="form-control"
                 id="exampleFormControlSelect2"
                 onChange={props.handleGuestsChange}
               >
-                {userDropdowns(props.users, props.guests)}
+                {userDropdowns(props.users, props.players)}
               </select>
             </div>
-
+        
             <div className="form-group">
-              <label htmlFor="location">Location</label>
-              <input
-                type="text"
-                className="form-control"
-                id="location"
-                placeholder="Location"
-                value={props.location}
-                name="location"
-                onChange={props.handleInputChange}
-              />
-              <p className="error">{props.errorLocation}</p>
-            </div>
-            <div className="form-group">
-              <label htmlFor="startDate">Start Date</label>
+              <label htmlFor="startDate"> Date </label>
               <input
                 type="date"
                 className="form-control"
@@ -85,37 +71,37 @@ export default function TripCard(props) {
               <p className="error">{props.errorStart}</p>
             </div>
             <div className="form-group">
-              <label htmlFor="endDate">End Date</label>
+              <label htmlFor="endDate"> Time </label>
               <input
-                type="date"
+                type="time"
                 className="form-control"
-                id="end"
+                id="time"
                 placeholder="YYYY-MM-DD"
                 min="2022-01-01"
                 max="2100-01-01"
-                value={props.end}
+                value={props.time}
                 name="end"
                 onChange={props.handleInputChange}
-              />
-              <p className="error">{props.errorEnd}</p>
+              /> 
+               <p className="error">{props.errorTime}</p>
             </div>
-            <div className="form-group">
-              <label htmlFor="description">Description</label>
+            {/* <div className="form-group">
+              <label htmlFor="description"> Comment </label>
               <textarea
                 className="form-control"
-                id="description"
+                id="comment"
                 rows="4"
-                value={props.description}
+                value={props.comment}
                 name="description"
                 onChange={props.handleInputChange}
               ></textarea>
               <p className="error">{props.errorDescription}</p>
-            </div>
+            </div> */}
           </form>
           <div>
             {moment(props.start).isSameOrAfter(moment()) && (
               <h4>
-                <i className="far fa-clock"></i> Trip Start
+                <i className="far fa-clock"></i> Reservation 
               </h4>
             )}
 
@@ -130,7 +116,7 @@ export default function TripCard(props) {
             variant="danger"
             className="deleteEvent"
           >
-            Delete Trip
+            Delete Reservation
           </Button>
           <Button onClick={props.save} variant="primary" className="saveEvent">
             Save Changes

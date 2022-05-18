@@ -5,9 +5,9 @@ import { Routes, Route, Link } from "react-router-dom";
   return (
     <div>
  
-     <p> Lets Play </p>
+     {/* <p> Lets Play </p>
      <Link to="/*"> Contact Us   </Link>
-     <Link to="/*"> Privacy </Link>
+     <Link to="/*"> Privacy </Link> */}
          
        
     </div>

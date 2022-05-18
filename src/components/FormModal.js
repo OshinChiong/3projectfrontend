@@ -1,11 +1,11 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-// import "./style.css";
 
 export default function FormModal(props) {
-  function userDropdowns(users, guests) {
+
+  function userDropdowns(users, players) {
     const mappedUsers = users?.map((user) => {
-      const selected = guests.find((guest) => guest === user._id)
+      const selected = players.find((players) => user === user._id)
         ? true
         : false;
       return (
@@ -15,87 +15,89 @@ export default function FormModal(props) {
       );
     });
     return mappedUsers;
+    
   }
-
   return (
-    <Modal show={props.show} id="trip">
+    <Modal show={props.show} id="reservation">
       <Modal.Dialog>
         <Modal.Header closeButton onClick={props.close}>
           <Modal.Title>
-            <i className="far fa-calendar-plus"></i> Make a New Trip
+            <i className="far fa-calendar-plus"></i> Reservation
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {/* <form {...props} autocomplete="off"> */}
           <form autoComplete="off">
             <div className="form-group">
-              <label htmlFor="title">Trip Name</label>
+              <label htmlFor="title"> Username </label>
               <input
                 type="text"
                 className="form-control"
                 id="title"
-                placeholder="Trip Name"
+                placeholder="Username"
                 value={props.title}
                 name="title"
                 onChange={props.handleInputChange}
               />
               <p className="error">{props.errorTitle}</p>
             </div>
-
             <div className="form-group">
-              <label htmlFor="exampleFormControlSelect2">Guests</label>
-              <select
-                multiple
-                className="form-control"
-                id="exampleFormControlSelect2"
-                onChange={props.handleGuestsChange}
-              >
-                {userDropdowns(props.users, props.guests)}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="location">Location</label>
+              <label> Field Size </label>
               <input
                 type="text"
                 className="form-control"
-                id="location"
-                placeholder="Location"
-                value={props.location}
-                name="location"
+                id="field"
+                placeholder="Field Size "
+                value={props.field}
+                name="firstName"
                 onChange={props.handleInputChange}
               />
-              <p className="error">{props.errorLocation}</p>
+              <p className="error">{props.errorField}</p>
             </div>
+            {/* <div className="form-group">
+              <label> Size </label>
+              <input
+                type="text"
+                className="form-control"
+                id="Size"
+                placeholder="size"
+                value={props.size}
+                name="Size"
+                onChange={props.handleInputChange}
+              />
+              <p className="error">{props.errorSize}</p>
+            </div> */}
 
             <div className="form-group">
-              <label htmlFor="startDate">Start Date</label>
+              <label htmlFor="startDate"> Date</label>
               <input
                 type="date"
                 className="form-control"
                 id="start"
                 placeholder="YYYY-MM-DD"
-                value={props.start}
+                value={props.date}
                 name="start"
                 onChange={props.handleInputChange}
               />
-              <p className="error">{props.errorStart}</p>
+              <p className="error">{props.errorTime}</p>
             </div>
+           
             <div className="form-group">
-              <label htmlFor="endDate">End Date</label>
+              <label htmlFor="time"> Time </label>
               <input
-                type="date"
+                type="time"
                 className="form-control"
-                id="end"
-                placeholder="YYYY-MM-DD"
-                value={props.end}
-                name="end"
+                id="timepicker"
+                placeholder="HH-mm-ss a"
+                value={props.time}
+                name="time"
                 onChange={props.handleInputChange}
               />
-              <p className="error">{props.errorEnd}</p>
+              <p className="error">{props.errorTime}</p>
             </div>
-            <div className="form-group">
-              <label htmlFor="description">Description</label>
+
+            {/* <div className="form-group">
+              <label htmlFor="description"> Comments </label>
               <textarea
                 className="form-control"
                 id="description"
@@ -105,7 +107,7 @@ export default function FormModal(props) {
                 onChange={props.handleInputChange}
               ></textarea>
               <p className="error">{props.errorDescription}</p>
-            </div>
+            </div> */}
           </form>
         </Modal.Body>
         <Modal.Footer>
@@ -113,7 +115,7 @@ export default function FormModal(props) {
             Close
           </Button>
           <Button onClick={props.save} variant="primary" className="newEvent">
-            Save Trip
+            Reserve
           </Button>
         </Modal.Footer>
       </Modal.Dialog>

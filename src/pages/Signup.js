@@ -24,6 +24,9 @@ const Signup = () => {
               localStorage.setItem('authToken', results.data.token);
               navigate("/")
             })
+            .then((results) => {
+              navigate("/reservation")
+            })
             .catch((err) => {
               console.log("Something went wrong", err.message);
             });
