@@ -35,6 +35,7 @@ navigate("/")
         {token ? (
           <nav>
             <Link to="/">Home</Link>
+            <Link to="/join"> Join a team </Link>
             <button onClick={logout}>log out</button>
           </nav>
         ) : (

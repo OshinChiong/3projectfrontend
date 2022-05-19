@@ -53,7 +53,7 @@ const Rental = () => {
         <div>
      {fields.map (function(field) {
        return(
-        <Link to={`/reserve/${field._id}`}>    
+        <Link key={field.size} to={`/reserve/${field._id}`}>    
         <img src='/images1.jpg' alt='fieldImage'/> 
         <p> {field.name} </p>
         <p> ${field.price} </p>

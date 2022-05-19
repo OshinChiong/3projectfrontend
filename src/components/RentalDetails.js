@@ -25,7 +25,7 @@ const RentalDetails = () => {
     calendar: true,
     eventSources: [],
     id: "",
-    // user: "",
+    user: "",
     // date: new Date(),
     date: "",
     time: "",
@@ -47,8 +47,9 @@ const RentalDetails = () => {
   }, []);
 // display  on calendar
 const reserve = () => {
-  get("/rental/view-rental")
-    .then((resp) => {
+  // get(`/rental/view-rental`)
+  get(`/rental/view-rental/${params.id}`)
+  .then((resp) => {
       console.log(resp.data);
       setState({
         ...state,
@@ -72,35 +73,9 @@ const reserve = () => {
     });
 };
 
-  // const reserve = () => {
-  //   get(`https://soccerloco.herokuapp.com/field/${params.fieldId}`)
-  //     .then((results) => {
-  //       console.log(results.data);
-  //       setField({
-  //         ...state,
-  //         showCard: false,
-  //         eventSources: results.data.map((e) => {
-  //           let start = moment(e.start).tz("UTC").format("YYYY-MM-DD");
-  //           let end = moment(e.end)
-  //             .tz("UTC")
-  //             .add(1, "days")
-  //             .format("YYYY-MM-DD");
-  //           return {
-  //             ...e,
-  //             start: start,
-  //             end: end,
-  //           };
-  //         }),
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-  // };
   
   const calendarComponentRef = React.createRef();
   const handleEventClick = (event) => {
-   
     console.log("event.event", event.event);
     console.log("event.event.extendedProps", event.event.extendedProps);
     //This is the rental id
@@ -117,24 +92,23 @@ const reserve = () => {
 
 
   const handleReserve = (rentalId) => {
-    console.log("RENTAL ID", rentalId);
-    console.log("PARAMS", params);
-    get(`/field/${params.id}`)
+    //rentalId is the id of the resevation
+    //params.id is the id of the field
+    get(`/rental/${rentalId}/edit`)
       .then((res) => {
-        console.log("You have Reserve this field", res.data);
-        const dateStart = res.data.start;
+        console.log("You have Reserve this field", res.data.rentalData);
+        const dateStart = res.data.rentalData.start;
         const start = moment(dateStart).tz("UTC").format("YYYY-MM-DD");
-        const dateEnd = res.data.end;
+        const dateEnd = res.data.rentalData.end;
         const end = moment(dateEnd).tz("UTC").format("YYYY-MM-DD");
         setState({
           ...state,
           showCard: true,
-          rentalId: res.data._id,
-          user: res.data.user,
-          date: date,
+          rentalId: res.data.rentalData._id,
+          user: res.data.rentalData.user,
+          start: date,
           time: "",
           field: "",
-          size: "",
           // comment: res.data.comment,
           people: res.data.people,
         });
@@ -142,6 +116,7 @@ const reserve = () => {
       .catch((err) => console.log(err));
   };
 
+  // button 
   const handleDeleteClick = (id) => {
     console.log("Handle Delete click", id);
     setState({
@@ -151,34 +126,40 @@ const reserve = () => {
     handleDeleteReservation(state.id);
   };
 
+  // save changes button 
   const handleUpdateClick = () => {
     console.log("Handle update click");
-    if (state.user && state.date && state.time ) {
+    console.log("STATE", state)
+    if (state.user && state.start && state.time ) {
       setState({
         ...state,
         showCard: false,
+       
       });
       handleUpdateRental(state.id);
+      console.log("Los Cadejos", state.id)
       setState({
         ...state,
         errorUser: "",
-        errorDate: "",
+        errorStart: "",
         errorTime: "",
-        // errorComment: "",
+   
       });
     } else {
       setState({
         ...state,
-        errorUser: "*Please enter your user",
-        errorDate: "*Please enter date",
-        errorTime: "*Please enter time",
+        id: state.id 
+        // errorUser: "*Please enter your user",
+        // errorDate: "*Please enter date",
+        // errorTime: "*Please enter time",
         // errorComments: "*Please enter comments",
       });
     }
   };
 
   const handleDeleteReservation = (id) => {
-    post(`/rental/${id}/delete`)
+    post(`/rental/${state.rentalId}/delete`, state)
+    
       .then(() => {
         localStorage.removeItem("reservation");
         reserve();
@@ -186,9 +167,12 @@ const reserve = () => {
       .catch((err) => console.log(err));
   };
 
-  const handleUpdateRental = (state) => {
-    post(`/rental/${id}/edit`, state)
-      // .update(id, state)
+  // update a reservation 
+  const handleUpdateRental = () => {
+    console.log("DID THIS HAPPEN?", state)
+    console.log("IDDDDD", state.rentalId)
+    // .update(id, state)
+    post(`/rental/${state.rentalId}/edit`, state)
       .then((foundRental) => {
         localStorage.setItem("rental", foundRental.data);
         reserve();
@@ -226,29 +210,29 @@ const reserve = () => {
     console.log("handle Date Click!!!")
     setState({
       ...state,
-      
       showModal: true,
       user: "",
-      date: new Date().getUTCHours(),
+      start: new Date().getUTCHours(),
       time: new Date().getUTCHours(),
       // commet: "",
     });
   };
 
+// people list on that day
   const handleUserChange = (event) => {
     let asArr = Array.prototype.slice.call(event.target.options);
     let peopleIds = asArr
       .filter((option) => option.selected)
       .map((option) => option.value);
-
     setState({
       ...state,
-      people: peopleIds,
+      people: peopleIds
     });
   };
 
+  // save a new reservation 
   const handleSaveRental = () => {
-    if (state.user && state.date && state.time) {
+    if (state.user && state.start && state.time) {
       post(`/rental/create/${id}`, state)
       // console.log("!!!!", id)
         .then(() => {
@@ -322,6 +306,9 @@ const reserve = () => {
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           ref={calendarComponentRef}
           weekends={state.calendarWeekends}
+          events={state.eventSources}
+          dateClick={handleDateClick}
+          eventClick={handleEventClick}
 //           events={ [
 //     {
 //       title: 'Event1',
@@ -335,9 +322,6 @@ const reserve = () => {
 //   ]
 
 // }
-          events={state.eventSources}
-          dateClick={handleDateClick}
-          eventClick={handleEventClick}
         />
       </div>
     </div>

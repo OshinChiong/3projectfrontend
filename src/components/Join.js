@@ -8,7 +8,7 @@ import { get, post } from "../authService/authService";
 const Join = (props) => {
     const [username, setUsername] = React.useState("");
     const [user, setUser] = React.useState("");
-    const [date, setDate] = React.useState("");
+    // const [date, setDate] = React.useState("");
     const [time, setTime] = React.useState("");
     const navigate = useNavigate();
 
@@ -92,7 +92,12 @@ const Join = (props) => {
                   />
                   <p className="error">{props.errorTime}</p>
                 </div>
-    <button> Join Game </button>
+    <button onClick={props.save} variant="primary"> Join Game </button>
+
+
+    {/* <Button onClick={props.save} variant="primary" className="saveEvent">
+            Save Changes
+          </Button> */}
                 {/* <div className="form-group">
                   <label htmlFor="description"> Comments </label>
                   <textarea

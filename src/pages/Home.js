@@ -5,7 +5,8 @@ const Home = () => {
     React.useEffect(() => {
       let token = localStorage.getItem("authToken");
       console.log("This is the token", token);
-      get("/users/login-test")
+      get("/users/login")
+      // get("/users/login-test")
         .then((results) => {
           console.log("Are we logged in?", results.data);
         })

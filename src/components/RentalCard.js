@@ -6,19 +6,19 @@ import { get } from "../authService/authService";
 
 export default function RentalCard(props) {
 
-  React.useEffect(()=>{
-    get('/rental/allRentals/6283c5131717721c9cb3ab45')
-    // get(`/rental/allRentals/6283c5131717721c9cb3ab45`)
-    .then((results) => {
-        console.log("this is results.data", results.data.rentalData)
-      // setAllRental(results.data);
-    })
-    .catch((err) => {
-      console.error(err.message);
-    });
-  },[])
+  // React.useEffect(()=>{
+  //   get('/rental/allRentals/6283c5131717721c9cb3ab45')
+  //   // get(`/rental/allRentals/6283c5131717721c9cb3ab45`)
+  //   .then((results) => {
+  //       console.log("this is results.data", results.data.rentalData)
+  //     // setAllRental(results.data);
+  //   })
+  //   .catch((err) => {
+  //     console.error(err.message);
+  //   });
+  // },[])
 
-  console.log("PROPSSSSSSS", props)
+
 
   
   function userDropdowns(users, players) {
@@ -36,10 +36,12 @@ export default function RentalCard(props) {
     return mappedUsers;
   }
   
+  
   return (
     <Modal show={props.show} id="reservation">
       <Modal.Dialog>
-        <Modal.Header closeButton onClick={props.close}>
+        {/* <Modal.Header closeButton onClick={props.close}> */}
+        <Modal.Header onClick={props.close}>
           <Modal.Title>
             <i className="far fa-edit"></i> Edit Your Reservation
           </Modal.Title>
@@ -74,14 +76,14 @@ export default function RentalCard(props) {
         
            
             <div className="form-group">
-              <label htmlFor="date"> Date</label>
+              <label htmlFor="startDate"> Start Date</label>
               <input
                 type="date"
                 className="form-control"
-                id="date"
+                id="start"
                 placeholder="MM-DD-YYYY"
-                value={props.date}
-                name="date"
+                value={props.start}
+                name="start"
                 onChange={props.handleInputChange}
               />
               <p className="error">{props.errorDate}</p>
@@ -112,7 +114,7 @@ export default function RentalCard(props) {
               <p className="error">{props.errorDescription}</p>
             </div> */}
           </form>
-          <div>
+          {/* <div>
             {moment(props.start).isSameOrAfter(moment()) && (
               <h4>
                 <i className="far fa-clock"></i> Reservation 
@@ -122,7 +124,7 @@ export default function RentalCard(props) {
             {moment(props.start).isSameOrAfter(moment()) && (
               <Clock deadline={props.start} />
             )}
-          </div>
+          </div> */}
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -132,6 +134,7 @@ export default function RentalCard(props) {
           >
             Delete Reservation
           </Button>
+          {/* <Button onClick={()=>props.save(props.id)} variant="primary" className="saveEvent"> */}
           <Button onClick={props.save} variant="primary" className="saveEvent">
             Save Changes
           </Button>
