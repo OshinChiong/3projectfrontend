@@ -92,13 +92,7 @@ const Join = (props) => {
                   />
                   <p className="error">{props.errorTime}</p>
                 </div>
-    <button onClick={props.save} variant="primary"> Join Game </button>
-
-
-    {/* <Button onClick={props.save} variant="primary" className="saveEvent">
-            Save Changes
-          </Button> */}
-                {/* <div className="form-group">
+                <div className="form-group">
                   <label htmlFor="description"> Comments </label>
                   <textarea
                     className="form-control"
@@ -109,7 +103,8 @@ const Join = (props) => {
                     onChange={props.handleInputChange}
                   ></textarea>
                   <p className="error">{props.errorDescription}</p>
-                </div> */}
+                </div>
+                <button onClick={props.save} variant="primary"> Join Game </button>
                    {/* <Button onClick={props.save}>
              Reserve </Button> */}
               </form>
