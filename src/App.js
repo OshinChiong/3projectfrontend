@@ -31,7 +31,7 @@ navigate("/")
     <div>
       <header>
         {token ? (
-          <nav className="navbar">
+          <nav>
           <div>
           </div>
             {/* <Link to="/"> Home</Link>
@@ -40,17 +40,17 @@ navigate("/")
             {/* <Link className="nav-link" to="/reservation"> Reserve a field   </Link>
             <Link className="nav-link" to="/join"> Join a team </Link> */}
            
-            <button className="logout" onClick={logout}>log out
-            <span className="navbar"></span>
+            <button className="logout" onClick={logout}> log out
+            <span ></span>
             </button>
           </nav>
           
         ) : (
-          <nav>
-            <Link className="navbar"  to="/">Home</Link>
-            <Link  className="navbar" to="/signup">Sign up</Link>
+          <nav className="navbar">
+           <a href="link">  <Link   to="/">Home</Link> </a>
+            <Link  to="/signup">Sign up</Link> 
             {/* <div className="collapse navbar-collapse mx-auto" id="navmenu"> */}
-            <Link className="navbar" to="/login">Log in</Link>
+            <Link to="/login">Log in</Link>
           
             {/* <Link to="/reservation"> Reserve a field   </Link>
             <Link to="/join"> Join a team </Link> */}

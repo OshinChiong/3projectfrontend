@@ -41,6 +41,7 @@ body{
   padding: 40px;
   font-family: Arial;
   text-align: center;
+  
 }
 .home {
   /* background-color: #282c34; */
@@ -70,19 +71,35 @@ body{
 }
 
 .navbar {
- 
-  display:flex;
+  display: flex;
+  position: relative;
   justify-items: center;
-  justify-content:space-evenly;
-  align-items: right;
+  justify-content:space-between;
   background-color: #81d323;
-  
- 
+  border-bottom: 1px solid #dfdfdf;
+  overflow: hidden;
+  height: 50px;
+
 }
 .logout{
-  background-color: #039BE5;
-  
+  background-color: #63c622;
+  align-items: flex-end;
 }
+
+a:link, a:visited {
+  background-color: #63c622;
+  color: rgb(16, 15, 15);
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: rgb(64, 187, 239);
+}
+
+
 .nav-link{
   background-color: #f6f3f3;
   text-align: left;
@@ -158,16 +175,21 @@ padding-top: 10%;
    color:#0a0a0a;
  }
 
- .homelink{
-   color:rgb(15, 13, 13);
-   justify-content: space-evenly;
- }
+ 
 
  .joinpage{
   background-image: url(/public/join.jpg);
   background-repeat: repeat-x;
   background-color: #8de347;
   padding-top: 10%;
+
+ 
+ 
+ 
+  background-color: #81d323;
+  border-bottom: 1px solid #dfdfdf;
+
+  
  }
 
  .form{

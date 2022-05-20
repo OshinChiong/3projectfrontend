@@ -38,7 +38,7 @@ const Home = () => {
           >
             <div>
 
-              <h1>Register. Play. Join.</h1>
+              <h1>Register. Play. Enjoy.</h1>
               <h3 className="text-info">Ready to play?</h3>
               <br />
               <h4 className="about-text" style={{ lineHeight: "2em" }}>
