@@ -95,7 +95,7 @@ return (
    </div>
      <button className="btn mt-3"> Create Account </button>
      <div className="container signin">
-   <p> Have an account? <a href="/login"> Log In  </a> .</p>
+   <p> Have an account? <a className="create" href="/login"> Log In  </a> .</p>
     </div>
      <p> {} </p>
      

@@ -46,7 +46,7 @@ navigate("/")
           </nav>
           
         ) : (
-          <nav className="navbar">
+          <nav className="sidebar">
            <a href="link">  <Link   to="/">Home</Link> </a>
             <Link  to="/signup">Sign up</Link> 
             {/* <div className="collapse navbar-collapse mx-auto" id="navmenu"> */}

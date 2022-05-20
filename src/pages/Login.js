@@ -64,7 +64,7 @@ const Login = () => {
         <p>{}</p>
       
   <div className="container signin">
-   <p> Don't have an account? <a href="/signup"> Sign up </a> .</p>
+   <p> Don't have an account? <a className="create" href="/signup"> Sign up </a> .</p>
     </div>
       </form>
       <div className="text-center fs-6"> </div>
