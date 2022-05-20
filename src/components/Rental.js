@@ -51,8 +51,9 @@ const Rental = () => {
     
       return (
         <div className="choose">
-         <Link className="nav-link" to="/join"> Join a team </Link>
+        
         <h1> Choose your field size and make a reservation </h1>
+        <Link className="nav-link" to="/join"> Join a team </Link>
        
      {fields.map (function(field) {
        return(

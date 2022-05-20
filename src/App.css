@@ -60,7 +60,7 @@ body{
   text-align: justify;
 }
 .register{
-  background-color: #ebf8e2;
+  background-color: #bff896;
   color: #0a0a0a;
   font-family: Arial;
   text-align: center;
@@ -108,7 +108,7 @@ body{
 
 .logout{
   background-color: #63c622;
-  align-items: flex-end;
+  
 }
 
 a:link {
@@ -126,8 +126,14 @@ a:hover, a:active {
 
 
 .nav-link{
-  background-color: #f6f3f3;
+  background-color: #96ef66;
   text-align: left;
+  height: 10%;
+  width: 30px;
+  position: absolute;
+  left: 0;
+  top: 165px;
+  
 }
 
 .logo img {
@@ -190,12 +196,12 @@ a:hover, a:active {
 }
 
 .choose{
-background-color: #8ce15c;
+background-color: #dff9d0;
 background-image: url(/public/download.png);
 background-repeat: repeat-x;
 /* border-bottom: #5abe43; */
 text-align: center;
-padding-top: 10%;
+padding-top: 14%;
  }
  
 
@@ -211,8 +217,8 @@ padding-top: 10%;
   background-color: #8de347;
   padding-top: 10%;
   background-color: #81d323;
-  border-bottom: 1px solid #dfdfdf;
-
+  border-bottom: 0.1px solid #dfdfdf;
+  text-align: left;
  }
 
  .form{
