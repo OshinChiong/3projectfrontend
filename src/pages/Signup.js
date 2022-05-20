@@ -2,6 +2,7 @@ import React from "react";
 import { post } from "../authService/authService";
 import { useNavigate } from "react-router-dom";
 
+
 const Signup = () => {
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -12,7 +13,7 @@ const Signup = () => {
 
     function checkFields(e) {
         e.preventDefault();
-        console.log("signup", username, password, confirmPassword)
+        console.log("signup", email, username, password, confirmPassword)
         post("/users/signup", {
             email: email,
             username: username,
@@ -33,35 +34,74 @@ const Signup = () => {
     }
 
 return (
-    <form onSubmit={checkFields} >
-      <label> Email </label>
+   
+    <div className="register" style={{ padding: "70px" }}>
+     <div className="wrapper">
+    <h2 style={{ textAlign: "center" }}> Sign up </h2>
+    <form 
+    onSubmit={checkFields}
+    style={{ textAlign: "center" }}
+ 
+     >
+
+     <div className="form-field d-flex align-items-center">
+      {" "}
+    <span className="far fa-user"> </span>{" "}
+    
+    <label> Enter Email </label>
     <input 
     onChange={(e) => setEmail (e.target.value)}
     name="Email"
+    placeholder="enter email"
     value={email}
     />
+    </div>
+    
+    <div className="form-field d-flex align-items-center">
+     {" "}
+    <span className="far fa-user"></span>{" "}
     <label> Username </label>
     <input 
     onChange={(e) => setUsername(e.target.value)}
     name="username"
+    placeholder="username"
     value={username}
     />
+    </div>
+    
+    <div className="form-field d-flex align-items-center">
+     {" "}
+    <span className="far fa-user"></span>{" "}
       <label> Password </label>
     <input 
     onChange={(e) => setPassword (e.target.value)}
     name="username"
+    placeholder="password"
     value={password}
     />
+    </div>
+
+
+    <div className="form-field d-flex align-items-center">
+     {" "}
+    <span className="far fa-user"></span>{" "}
      <label> Confirm Password </label>
     <input 
     onChange={(e) => setConfirmPassword (e.target.value)}
     name="confirmPassword"
+    placeholder="confirm password"
     value={confirmPassword}
     />
-   
-     <button> Create Account </button>
+   </div>
+     <button className="btn mt-3"> Create Account </button>
+     <div className="container signin">
+   <p> Have an account? <a href="/login"> Log In  </a> .</p>
+    </div>
      <p> {} </p>
+     
     </form>
+    </div>
+     </div>
 );
 };
 

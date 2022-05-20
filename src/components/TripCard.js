@@ -2,26 +2,11 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import Clock from "./Clock";
 import moment from "moment";
-import { get } from "../authService/authService";
 
-export default function RentalCard(props) {
-
-  // React.useEffect(()=>{
-  //   get('/rental/allRentals/6283c5131717721c9cb3ab45')
-  //   // get(`/rental/allRentals/6283c5131717721c9cb3ab45`)
-  //   .then((results) => {
-  //       console.log("this is results.data", results.data.rentalData)
-  //     // setAllRental(results.data);
-  //   })
-  //   .catch((err) => {
-  //     console.error(err.message);
-  //   });
-  // },[])
-
-  
-  function userDropdowns(users, players) {
+export default function TripCard(props) {
+  function userDropdowns(users, guests) {
     const mappedUsers = users?.map((user) => {
-      const selected = players.find((player) => player === user._id)
+      const selected = guests.find((guest) => guest === user._id)
         ? true
         : false;
       return (
@@ -30,24 +15,21 @@ export default function RentalCard(props) {
         </option>
       );
     });
-    
+
     return mappedUsers;
   }
-  
+
   return (
-   
     <Modal show={props.show} id="reservation">
       <Modal.Dialog>
-      <div className="form"> 
-        {/* <Modal.Header closeButton onClick={props.close}> */}
-        <Modal.Header onClick={props.close}>
+        <Modal.Header closeButton onClick={props.close}>
           <Modal.Title>
-            <i className="edit"></i> Edit Your Reservation
+            <i className="far fa-edit"></i> Edit Your Reservation
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form autoComplete="off">
-            {/* <div className="form-group">
+            <div className="form-group">
               <label htmlFor="title"> Reservation number </label>
               <input
                 type="text"
@@ -59,9 +41,9 @@ export default function RentalCard(props) {
                 onChange={props.handleInputChange}
               />
               <p className="error">{props.errorTitle}</p>
-            </div> */}
+            </div>
 
-            {/* <div className="form-group">
+            <div className="form-group">
               <label htmlFor="exampleFormControlSelect2"> Players </label>
               <select
                 multiple
@@ -69,51 +51,68 @@ export default function RentalCard(props) {
                 id="exampleFormControlSelect2"
                 onChange={props.handleGuestsChange}
               >
-                {userDropdowns(props.users, props.players)}
+                {userDropdowns(props.users, props.guests)}
               </select>
-            </div> */}
-        
-           
-            <div className="form">
-              <label htmlFor="startDate"> Start Date</label>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="location">Location</label>
+              <input
+                type="text"
+                className="form-control"
+                id="location"
+                placeholder="Location"
+                value={props.location}
+                name="location"
+                onChange={props.handleInputChange}
+              />
+              <p className="error">{props.errorLocation}</p>
+            </div>
+            <div className="form-group">
+              <label htmlFor="startDate">Start Date</label>
               <input
                 type="date"
                 className="form-control"
+                placeholder="YYYY-MM-DD"
+                min="2022-01-01"
+                max="2100-01-01"
                 id="start"
-                placeholder="MM-DD-YYYY"
                 value={props.start}
                 name="start"
                 onChange={props.handleInputChange}
               />
-              <p className="error">{props.errorDate}</p>
-            </div>
-            <div className="form">
-              <label htmlFor="time"> Time </label>
-              <input
-                type="time"
-                className="form-control"
-                id="timepicker"
-                placeholder="HH-mm-ss"
-                value={props.time}
-                name="time"
-                onChange={props.handleInputChange}
-              />
-              <p className="error">{props.errorTime}</p>
+              
+              <p className="error">{props.errorStart}</p>
             </div>
             {/* <div className="form-group">
-              <label htmlFor="description"> Comment </label>
+              <label htmlFor="endDate">End Date</label>
+              <input
+                type="date"
+                className="form-control"
+                id="end"
+                placeholder="YYYY-MM-DD"
+                min="2022-01-01"
+                max="2100-01-01"
+                value={props.end}
+                name="end"
+                onChange={props.handleInputChange}
+              /> */}
+              {/* <p className="error">{props.errorEnd}</p>
+            </div> */}
+            <div className="form-group">
+              <label htmlFor="description">Comment</label>
               <textarea
                 className="form-control"
-                id="comment"
+                id="description"
                 rows="4"
-                value={props.comment}
+                value={props.description}
                 name="description"
                 onChange={props.handleInputChange}
               ></textarea>
               <p className="error">{props.errorDescription}</p>
-            </div> */}
+            </div>
           </form>
-          {/* <div>
+          <div>
             {moment(props.start).isSameOrAfter(moment()) && (
               <h4>
                 <i className="far fa-clock"></i> Reservation 
@@ -123,23 +122,20 @@ export default function RentalCard(props) {
             {moment(props.start).isSameOrAfter(moment()) && (
               <Clock deadline={props.start} />
             )}
-          </div> */}
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button
-            onClick={()=>props.delete(props.id)}
+            onClick={props.delete}
             variant="danger"
             className="deleteEvent"
           >
             Delete Reservation
           </Button>
-          {/* <Button onClick={()=>props.save(props.id)} variant="primary" className="saveEvent"> */}
           <Button onClick={props.save} variant="primary" className="saveEvent">
             Save Changes
           </Button>
-          
         </Modal.Footer>
-        </div>
       </Modal.Dialog>
     </Modal>
   );

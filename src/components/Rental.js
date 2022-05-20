@@ -50,10 +50,13 @@ const Rental = () => {
       console.log(fields)
     
       return (
-        <div>
+        <div className="choose">
+         <Link className="nav-link" to="/join"> Join a team </Link>
+        <h1> Choose your field size and make a reservation </h1>
+       
      {fields.map (function(field) {
        return(
-        <Link key={field.size} to={`/reserve/${field._id}`}>    
+        <Link className="link" to={`/reserve/${field._id}`}>    
         <img src='/images1.jpg' alt='fieldImage'/> 
         <p> {field.name} </p>
         <p> ${field.price} </p>

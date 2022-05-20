@@ -242,7 +242,12 @@ const reserve = () => {
           });
           console.log(state)
           // navigate(`/reserve/${id}`);
-          navigate(`/allRentals/${id}`);
+          // navigate(`/allRentals/${id}`);
+
+
+          //get all of the reservations !!!
+          reserve()
+          
         })
         .catch((err) => console.log(err));
       setState({

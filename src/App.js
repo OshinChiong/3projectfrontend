@@ -9,11 +9,9 @@ import FullCalendar from "./components/FullCalendar";
 import Rental from "./components/Rental";
 import RentalDetails from "./components/RentalDetails";
 import Clock from "./components/Clock";
-import Footer from "./pages/Footer";
 import Join from "./components/Join";
-import Reservations from "./components/Reservations";
-import Delete from "./pages/Delete";
 
+import Delete from "./pages/Delete";
 
 
 function App() {
@@ -33,19 +31,31 @@ navigate("/")
     <div>
       <header>
         {token ? (
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/join"> Join a team </Link>
-            <button onClick={logout}>log out</button>
+          <nav className="navbar">
+          <div>
+          </div>
+            {/* <Link to="/"> Home</Link>
+            <Link className="navbar" to="/signup">Sign up</Link>
+            <Link  className="navbar" to="/login">Log in</Link> */}
+            {/* <Link className="nav-link" to="/reservation"> Reserve a field   </Link>
+            <Link className="nav-link" to="/join"> Join a team </Link> */}
+           
+            <button className="logout" onClick={logout}>log out
+            <span className="navbar"></span>
+            </button>
           </nav>
+          
         ) : (
           <nav>
-            <Link to="/">Home</Link>
-            <Link to="/signup">Sign up</Link>
-            <Link to="/login">Log in</Link>
-            <Link to="/reservation"> Reserve a field   </Link>
-            <Link to="/join"> Join a team </Link>
-            <Link to="/details"> Details </Link>
+            <Link className="navbar"  to="/">Home</Link>
+            <Link  className="navbar" to="/signup">Sign up</Link>
+            {/* <div className="collapse navbar-collapse mx-auto" id="navmenu"> */}
+            <Link className="navbar" to="/login">Log in</Link>
+          
+            {/* <Link to="/reservation"> Reserve a field   </Link>
+            <Link to="/join"> Join a team </Link> */}
+           
+            {/* </div> */}
           </nav>
         )}
       </header>
@@ -61,13 +71,13 @@ navigate("/")
         <Route path="/fullcalendar" element={<FullCalendar />} />
 
         <Route path="/reserve/:id" element={<RentalDetails />} />
-        <Route path="/deleteuser" element={<Delete />} />
+        <Route path="/updateUser" element={<Delete />} />
         <Route path="/allRentals" element={<RentalDetails />} />
         <Route path="/allRentals/:id" element={<RentalDetails />} />
         <Route path="/view-calendar" element={<RentalDetails />} />
       </Routes>
     
-      <Footer />
+    
     </div>
   );
 }

@@ -20,7 +20,7 @@ export default function FormModal(props) {
   return (
     <Modal show={props.show} id="reservation">
       <Modal.Dialog>
-        <Modal.Header closeButton onClick={props.close}>
+        <Modal.Header className="form-group" closeButton onClick={props.close}>
           <Modal.Title>
             <i className="far fa-calendar-plus"></i> Reservation
           </Modal.Title>
@@ -28,7 +28,7 @@ export default function FormModal(props) {
         <Modal.Body>
           {/* <form {...props} autocomplete="off"> */}
           <form autoComplete="off">
-            <div className="form-group">
+            <div className="formgroup">
               <label htmlFor="title"> Username </label>
               <input
                 type="text"
@@ -55,7 +55,7 @@ export default function FormModal(props) {
               <p className="error">{props.errorFieldSize}</p>
             </div> */}
 
-            <div className="form-group">
+            <div className="formgroup">
               <label htmlFor="start"> Date</label>
               <input
                 type="date"
@@ -66,21 +66,21 @@ export default function FormModal(props) {
                 name="start"
                 onChange={props.handleInputChange}
               />
-              <p className="error">{props.errorDate}</p>
+              <p >{props.errorDate}</p>
             </div>
            
-            <div className="form-group">
+            <div className="formgroup">
               <label htmlFor="time"> Time </label>
               <input
                 type="time"
-                className="form-control"
+                // className="form-control"
                 id="timepicker"
                 placeholder="HH-mm-ss"
                 value={props.time}
                 name="time"
                 onChange={props.handleInputChange}
               />
-              <p className="error">{props.errorTime}</p>
+              <p>{props.errorTime}</p>
             </div>
 
             {/* <div className="form-group">
@@ -98,7 +98,7 @@ export default function FormModal(props) {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={props.close} variant="contained" color="" >
+          <Button onClick={props.close} variant="contained" className="newEvent" >
             Close
           </Button>
           <Button onClick={props.save} variant="primary" className="newEvent">

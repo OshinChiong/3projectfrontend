@@ -13,8 +13,8 @@ const Join = (props) => {
     const navigate = useNavigate();
 
 
-    function Join() {
-        get("http://localhost:5001")
+    function Join(rentalId) {
+        post(`/rental/${rentalId}/addUser`)
         .then((results) => (results.data))
         .catch((err) => console.log(err.message));
     };
@@ -22,7 +22,7 @@ const Join = (props) => {
 
     return (
      
-              <form autoComplete="off">
+              <form className="joinpage">
                 <div className="form-group">
                 <p> Want to Join a Game? Fill your information below and 
                 tells us which day are you available</p>
@@ -92,7 +92,7 @@ const Join = (props) => {
                   />
                   <p className="error">{props.errorTime}</p>
                 </div>
-                <div className="form-group">
+                {/* <div className="form-group">
                   <label htmlFor="description"> Comments </label>
                   <textarea
                     className="form-control"
@@ -103,10 +103,17 @@ const Join = (props) => {
                     onChange={props.handleInputChange}
                   ></textarea>
                   <p className="error">{props.errorDescription}</p>
-                </div>
+                </div> */}
+                {/* <button type="submit"> Add comment </button> */}
                 <button onClick={props.save} variant="primary"> Join Game </button>
                    {/* <Button onClick={props.save}>
              Reserve </Button> */}
+              <div>
+
+               
+              </div>
+
+              
               </form>
            
     
@@ -115,33 +122,7 @@ const Join = (props) => {
       );
     }
 
-// return (
-//     <form onSubmit={Join} >
-//     <p> Want to play join a Team </p>
-//     <label> Username </label>
-//     <input 
-//     onChange={(e) => setUsername(e.target.value)}
-//     name="username"
-//     value={username}
-//     />
-//       <label> Days you are available </label>
-//     <input 
-//     onChange={(e) => setDate (e.target.value)}
-//     name="date"
-//     value={date}
-//     />
-//      <label> Time you are available  </label>
-//     <input 
-//     onChange={(e) => setTime (e.target.value)}
-//     name="Time"
-//     value={time}
-//     />
-   
-//      <button> Join to team </button>
-    
-//     </form>
-// );
-// };
+
 
 
 
