@@ -70,8 +70,8 @@ const Home = () => {
       <footer> 
       <div className='footer-links'> 
 
-<Link className="create" to="/*" > Contact Us   </Link>
-<Link className="create" to="/*"> Privacy </Link>
+<Link className="bottom" to="/*" > Contact Us   </Link>
+<Link className="bottom" to="/*"> Privacy </Link>
 
 </div>
 
